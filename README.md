@@ -39,7 +39,24 @@ Task:
 
 - In the table above, the **Products column** contains multiple values, which violates **1NF**.
 - **Write an SQL query** to transform this table into **1NF**, ensuring that each row represents a single product for an order
+OrderID	CustomerName	Products
+101	John Doe	Laptop, Mouse
+102	Jane Smith	Tablet, Keyboard, Mouse
+103	Emily Clark	Phone
 
+Into this:
+OrderID	CustomerName	Products
+101	John Doe	  Laptop, Mouse
+102	Jane Smith	Tablet, Keyboard, Mouse
+103	Emily Clark	Phone
+
+OrderID	CustomerName	Product
+101	John Doe	Laptop
+101	John Doe	Mouse
+102	Jane Smith	Tablet
+102	Jane Smith	Keyboard
+102	Jane Smith	Mouse
+103	Emily Clark	Phone
 --- 
 
 ### Question 2 Achieving 2NF (Second Normal Form) 🧩
@@ -58,6 +75,39 @@ Task:
 - In the table above, the **CustomerName** column depends on **OrderID** (a partial dependency), which violates **2NF**. 
 
 - Write an SQL query to transform this table into **2NF** by removing partial dependencies. Ensure that each non-key column fully depends on the entire primary key.
+Normalize the table into 2NF by splitting it into two related tables:
+
+1. Orders table:
+
+OrderID	CustomerName
+101	John Doe
+102	Jane Smith
+103	Emily Clark
+
+2. OrderItems table
+
+OrderID	Product	Quantity
+101	Laptop	2
+101	Mouse	1
+102	Tablet	3
+102	Keyboard	1
+102	Mouse	2
+103	Phone	1
+
+3 SQL Queries to Transform Data into 2NF
+SELECT DISTINCT 
+    OrderID, 
+    CustomerName
+FROM 
+    OrderDetails;
+--
+    OrderID, 
+    Product, 
+    Quantity
+FROM 
+    OrderDetails;
+This gives the OrderItems table.
+- 
 
 ---
 Good luck 🚀
